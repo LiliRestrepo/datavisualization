@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("plotly")
+library(plotly)
+library(tidyverse)
+```
+```{r}
+# Import Data 
+UL  <- read.csv("C:/Users/lilir/Desktop/STU/8 Data Visualization/R files Data Visualization/cab_rides.csv") 
+UL
+```
+
+```{r}
+# Group by type
+ULtype <- UL %>%
+  #is.na() %>%
+  group_by(cab_type)%>%
+  #group_by(name) %>%
+  summarise( Avg = mean(price))
+ULtype
+
+#Bar Plot 
+
+p1 <- ggplot(ULtype, aes(x= cab_type, y= Avg, fill = cab_type))+
+  geom_bar(stat = "identity")+
+  theme(legend.position = "none")+
+  labs( title = "Average price per cab type",
+          x ="Cab type", y = "Average price")
+ggplotly(p1)
+
+```
+
+```{r}
+#Group by species 
+irisCounts <- iris %>% 
+  group_by(Species) %>%
+  summarise(Avg = mean(Petal.Length))
+
+#Bar Plot 
+
+p <- ggplot(irisCounts, aes(x= Species, y= Avg, fill = Species))+
+  geom_bar(stat = "identity")+
+  theme(legend.position = "none")+
+  labs( title = "Average Petal Length per Species", y = "Petal Length (inches)")
+ggplotly(p)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
